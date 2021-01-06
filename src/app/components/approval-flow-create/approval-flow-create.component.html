@@ -1,0 +1,51 @@
+<clr-modal [(clrModalOpen)]="isModalVisible" [clrModalSize]="'xl'">
+  <h3 class="modal-title">Create Approval flow</h3>
+    <div class="modal-body">
+      <clr-tabs clrLayout="vertical">
+        <clr-tab>
+          <button clrTabLink id="link1" >Main</button>
+          <clr-tab-content id="content1" *clrIfActive>
+            <form clrForm [formGroup]="form">
+              <clr-input-container>
+                <label>Approval flow name</label>
+                <input clrInput type="text" formControlName="name" required />
+                <clr-control-error>Error message that appears after focus is lost and control is invalid
+                </clr-control-error>
+              </clr-input-container>
+            </form>
+          </clr-tab-content>
+        </clr-tab>
+        <clr-tab disabled="disabled">
+          <button clrTabLink>Actions</button>
+          <clr-tab-content>
+            <div class="clr-row" style="width: 99%;">
+              <div class="clr-col-6 list-box" cdkDropList #minha="cdkDropList" [cdkDropListConnectedTo]="[confirmados]" [cdkDropListData]="this.actionFlowList" (cdkDropListDropped)="drop($event)">
+                <div>
+                  <h5>All action flows</h5>
+                  <ul>
+                    <li *ngFor="let flowList of this.actionFlowList" cdkDrag>{{flowList.name}}</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="clr-col-6 list-box" cdkDropList #confirmados="cdkDropList" [cdkDropListData]="this.selectedActionFlowList" [cdkDropListConnectedTo]="[minha]" (cdkDropListDropped)="drop($event)">
+                <div>
+                  <h5>Selected action flows</h5>
+                  <ul>
+                    <li *ngFor="let selectedActionFlow of this.selectedActionFlowList" cdkDrag>
+                      {{selectedActionFlow.name}}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </clr-tab-content>
+        </clr-tab>
+      </clr-tabs>
+
+
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary btn-block" (click)="this.submit()" [disabled]="!this.form.valid">
+          Create
+      </button>
+    </div>
+</clr-modal>

@@ -1,0 +1,79 @@
+<clr-modal [(clrModalOpen)]="isModalVisible" [clrModalSize]="'xl'">
+  <h3 class="modal-title">Create action flow</h3>
+  <div class="modal-body">
+    <clr-tabs clrLayout="vertical">
+      <clr-tab>
+        <button clrTabLink id="link1" >Main</button>
+        <clr-tab-content id="content1" *clrIfActive>
+          <form clrForm [formGroup]="form" clrLayout="vertical" class="width-100">
+            <clr-input-container>
+              <label clas="clr-control-label">Action flow name</label>
+              <input clrInput type="text" formControlName="name" required />
+              <clr-control-error>Error message that appears after focus is lost and control is invalid
+              </clr-control-error>
+            </clr-input-container>
+            <clr-select-container>
+              <label>Feature</label>
+              <select clrSelect formControlName="feature" required>
+                <option *ngFor="let feature of this.features" [value]="feature.code">{{feature.name}}</option>
+              </select>
+            </clr-select-container>
+          </form>
+        </clr-tab-content>
+      </clr-tab>
+      <clr-tab disabled="disabled">
+        <button clrTabLink>Groups</button>
+        <clr-tab-content>
+          <div class="clr-row" style="width: 99%;">
+            <div class="clr-col-6 list-box" cdkDropList #minha="cdkDropList" [cdkDropListConnectedTo]="[confirmados]" [cdkDropListData]="this.userGroupList" (cdkDropListDropped)="drop($event)">
+              <div>
+                <h5>All groups</h5>
+                <ul>
+                  <li *ngFor="let userGroup of this.userGroupList" cdkDrag>{{userGroup.name}}</li>
+                </ul>
+              </div>
+            </div>
+            <div class="clr-col-6 list-box" cdkDropList #confirmados="cdkDropList" [cdkDropListData]="this.confirmedUserGroupList" [cdkDropListConnectedTo]="[minha]" (cdkDropListDropped)="drop($event)">
+              <div>
+                <h5>Selected groups</h5>
+                <ul>
+                  <li *ngFor="let confirmeduserGroupList of this.confirmedUserGroupList" cdkDrag>
+                    {{confirmeduserGroupList.name}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </clr-tab-content>
+      </clr-tab>
+      <clr-tab disabled="disabled">
+        <button clrTabLink>Approval Groups</button>
+        <clr-tab-content>
+          <div class="clr-row" style="width: 99%;">
+            <div class="clr-col-6 list-box" cdkDropList #approvalGroupSelected="cdkDropList" [cdkDropListConnectedTo]="[approvalGroup]" [cdkDropListData]="this.userGroupList" (cdkDropListDropped)="drop($event)">
+              <div>
+                <h5>All groups</h5>
+                <ul>
+                  <li *ngFor="let userGroup of this.userGroupList" cdkDrag>{{userGroup.name}}</li>
+                </ul>
+              </div>
+            </div>
+            <div class="clr-col-6 list-box" cdkDropList #approvalGroup="cdkDropList" [cdkDropListData]="this.confirmedApprovalGroupList" [cdkDropListConnectedTo]="[approvalGroupSelected]" (cdkDropListDropped)="drop($event)">
+              <div>
+                <h5>Selected groups</h5>
+                <ul>
+                  <li *ngFor="let confirmedApprovalGroup of this.confirmedApprovalGroupList" cdkDrag>
+                    {{confirmedApprovalGroup.name}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </clr-tab-content>
+      </clr-tab>
+    </clr-tabs>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary btn-block" (click)="this.submit()" [disabled]="!this.form.valid">
+      Save
+    </button>
+  </div>
+</clr-modal>

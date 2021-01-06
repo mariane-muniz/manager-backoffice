@@ -1,0 +1,67 @@
+<clr-modal [(clrModalOpen)]="isModalVisible" [clrModalSize]="'xl'">
+  <h3 class="modal-title">Create project</h3>
+  <div class="modal-body">
+    <clr-tabs clrLayout="vertical">
+      <clr-tab>
+        <button clrTabLink id="link1" >Main</button>
+        <clr-tab-content id="content1" *clrIfActive>
+          <form clrForm [formGroup]="form" clrLayout="vertical" class="width-100">
+            <clr-input-container>
+              <label clas="clr-control-label">Name</label>
+              <input clrInput type="text" formControlName="name" required />
+              <clr-control-error>Error message that appears after focus is lost and control is invalid
+              </clr-control-error>
+            </clr-input-container>
+            <clr-input-container>
+              <label clas="clr-control-label">jiraID</label>
+              <input clrInput type="text" formControlName="jiraID" required />
+              <clr-control-error>Error message that appears after focus is lost and control is invalid
+              </clr-control-error>
+            </clr-input-container>
+            <clr-select-container>
+              <label>Status</label>
+              <select clrSelect formControlName="statusCode" required>
+                <option *ngFor="let status of this.statusList" [value]="status" selected="true">{{status}}</option>
+              </select>
+            </clr-select-container>
+            <clr-select-container>
+              <label>Priority</label>
+              <select clrSelect formControlName="priorityCode" required>
+                <option *ngFor="let priority of this.priorityList" [value]="priority">{{priority}}</option>
+              </select>
+            </clr-select-container>
+            <clr-select-container>
+              <label>Approval flow</label>
+              <select clrSelect formControlName="approvalFlowCode" required>
+                <option></option>
+                <option *ngFor="let approvalFlow of this.approvalFlowList" [value]="approvalFlow.code">{{approvalFlow.name}}</option>
+              </select>
+            </clr-select-container>
+          </form>
+        </clr-tab-content>
+      </clr-tab>
+      <clr-tab disabled="disabled">
+        <button clrTabLink>Members</button>
+        <clr-tab-content>
+          <clr-datagrid [(clrDgSelected)]="selected" [clrDgRowSelection]="true">
+            <clr-dg-column *ngFor="let column of this.columns" [clrDgField]="column">{{column}}</clr-dg-column>
+            <clr-dg-row *clrDgItems="let user of this.userList" [clrDgItem]="user">
+              <clr-dg-cell>{{user.name}}</clr-dg-cell>
+            </clr-dg-row>
+            <clr-dg-footer>{{this.userList.length}} <span>action flows</span></clr-dg-footer>
+            <clr-dg-footer>
+              <clr-dg-pagination #pagination [clrDgPageSize]="10">
+                  <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Items per page</clr-dg-page-size>
+              </clr-dg-pagination>
+            </clr-dg-footer>
+          </clr-datagrid>
+        </clr-tab-content>
+      </clr-tab>
+    </clr-tabs>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary btn-block" (click)="this.submit()" [disabled]="!this.form.valid">
+      Save
+    </button>
+  </div>
+</clr-modal>

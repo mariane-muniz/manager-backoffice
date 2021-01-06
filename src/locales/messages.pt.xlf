@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="project-data-grid.button.add" datatype="html">
+        <source>add</source>
+        <target>Adicionar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project-datagrid/project-datagrid.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="description"> Botão que dispara o evento de abrir o formulário para cadastro de novo projeto </note>
+        <note priority="1" from="meaning">Botão de adicionar novo projeto </note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

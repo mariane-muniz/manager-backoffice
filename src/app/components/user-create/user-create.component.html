@@ -1,0 +1,18 @@
+<clr-modal [(clrModalOpen)]="isModalVisible">
+  <h3 class="modal-title">Create User</h3>
+  <div class="modal-body">
+    <form clrForm [formGroup]="form" clrLayout="vertical" class="width-100">
+      <clr-input-container>
+        <label clas="clr-control-label">Name</label>
+        <input clrInput type="text" formControlName="name" required />
+        <clr-control-error>Error message that appears after focus is lost and control is invalid
+        </clr-control-error>
+      </clr-input-container>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary btn-block" (click)="this.submit()" [disabled]="!this.form.valid">
+      Save
+    </button>
+  </div>
+</clr-modal>

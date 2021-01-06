@@ -1,0 +1,22 @@
+<div style="display: block; height: 50px;">
+  <div class="btn-group" style="float: right;">
+    <button class="btn" (click)="this.openProjectRegisterForm()" i18n="Add project button | Button that triggers the event to open the form to register a new project @@project-data-grid.button.add">add</button>
+    <button class="btn" [disabled]="this.selected.length != 1" (click)="this.playProject()">Play</button>
+    <button class="btn" [disabled]="this.selected.length != 1" (click)="this.openProjectEditForm()" i18n="Edit project button | Button that triggers the event to open the form to edit a existent project @@project-data-grid.button.edit">Edit</button>
+    <button class="btn" [disabled]="this.selected.length === 0" (click)="this.deleteProject()" i18n="Delete projects button | Button that triggers a service to remove selected projects on the grid @@project-data-grid.button.delete">Delete</button>
+  </div>
+</div>
+<clr-datagrid [(clrDgSelected)]="selected" [clrDgRowSelection]="true">
+  <clr-dg-column *ngFor="let column of this.columns" [clrDgField]="column">{{column}}</clr-dg-column>
+  <clr-dg-row *clrDgItems="let project of this.projectList" [clrDgItem]="project">
+    <clr-dg-cell>{{project.name}}</clr-dg-cell>
+    <clr-dg-cell>{{project.status}}</clr-dg-cell>
+    <clr-dg-cell>{{project.priority}}</clr-dg-cell>
+  </clr-dg-row>
+  <clr-dg-footer>{{this.projectList.length}} <span i18n="Label projects| Complementary text of the project grid for information on the number of records @@project-data-grid.label.projects">projects</span></clr-dg-footer>
+  <clr-dg-footer>
+    <clr-dg-pagination #pagination [clrDgPageSize]="50">
+        <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]" i18n="Label itens per page| Complementary text of the project grid for information on quantity of registers showed in the datagrid @@project-data-grid.label.projects">Items per page</clr-dg-page-size>
+    </clr-dg-pagination>
+  </clr-dg-footer>
+</clr-datagrid>

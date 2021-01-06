@@ -1,0 +1,42 @@
+<clr-modal [(clrModalOpen)]="isModalVisible" [clrModalSize]="'xl'">
+  <h3 class="modal-title">Create group</h3>
+    <div class="modal-body">
+      <clr-tabs clrLayout="vertical">
+        <clr-tab>
+          <button clrTabLink id="link1" >Main</button>
+          <clr-tab-content id="content1" *clrIfActive>
+            <form clrForm [formGroup]="form" clrLayout="vertical" class="width-100">
+              <clr-input-container>
+                <label>User group name</label>
+                <input clrInput type="text" formControlName="name" required />
+                <clr-control-error>Error message that appears after focus is lost and control is invalid
+                </clr-control-error>
+              </clr-input-container>
+            </form>
+          </clr-tab-content>
+        </clr-tab>
+        <clr-tab disabled="disabled">
+          <button clrTabLink>Users</button>
+          <clr-tab-content>
+            <clr-datagrid [(clrDgSelected)]="selected" [clrDgRowSelection]="true">
+              <clr-dg-column *ngFor="let column of this.columns" [clrDgField]="column">{{column}}</clr-dg-column>
+              <clr-dg-row *clrDgItems="let user of this.users" [clrDgItem]="user">
+                <clr-dg-cell>{{user.name}}</clr-dg-cell>
+              </clr-dg-row>
+              <clr-dg-footer>{{this.users.length}} <span>action flows</span></clr-dg-footer>
+              <clr-dg-footer>
+                <clr-dg-pagination #pagination [clrDgPageSize]="10">
+                    <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Items per page</clr-dg-page-size>
+                </clr-dg-pagination>
+              </clr-dg-footer>
+            </clr-datagrid>
+          </clr-tab-content>
+        </clr-tab>
+      </clr-tabs>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary btn-block" (click)="this.submit()" [disabled]="!this.form.valid">
+          Save
+      </button>
+    </div>
+</clr-modal>
